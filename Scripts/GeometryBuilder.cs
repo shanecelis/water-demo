@@ -54,8 +54,8 @@ public class GeometryBuilder : MonoBehaviour {
       Vector2 uv3 = new Vector2(1, 0);
       draft.AddQuad(v100, v101, v001, v000, Vector3.left, uv0, uv1, uv2, uv3)
         .AddQuad(v010, v011, v111, v110, Vector3.right, uv0, uv1, uv2, uv3)
-        .AddQuad(v010, v110, v100, v000, Vector3.down, uv0, uv1, uv2, uv3)
-        // .AddQuad(v111, v011, v001, v101, Vector3.up, uv0, uv1, uv2, uv3)
+        // .AddQuad(v010, v110, v100, v000, Vector3.down, uv0, uv1, uv2, uv3)
+        .AddQuad(v111, v011, v001, v101, Vector3.up, uv0, uv1, uv2, uv3)
         .AddQuad(v000, v001, v011, v010, Vector3.back, uv0, uv1, uv2, uv3)
         .AddQuad(v110, v111, v101, v100, Vector3.forward, uv0, uv1, uv2, uv3);
     }
@@ -63,8 +63,8 @@ public class GeometryBuilder : MonoBehaviour {
     {
       draft.AddQuad(v100, v101, v001, v000, Vector3.left)
         .AddQuad(v010, v011, v111, v110, Vector3.right)
-        .AddQuad(v010, v110, v100, v000, Vector3.down)
-        // .AddQuad(v111, v011, v001, v101, Vector3.up)
+        // .AddQuad(v010, v110, v100, v000, Vector3.down)
+        .AddQuad(v111, v011, v001, v101, Vector3.up)
         .AddQuad(v000, v001, v011, v010, Vector3.back)
         .AddQuad(v110, v111, v101, v100, Vector3.forward);
     }
