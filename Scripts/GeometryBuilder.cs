@@ -24,7 +24,11 @@ public class GeometryBuilder : MonoBehaviour {
     cubeMeshFilter.mesh = cube.ToMesh();
 
     var water = MeshDraft.Plane(2f, 2f, 200, 200, true);
-    water.vertices = water.vertices.Select(v => v - new Vector3(1f, 0, 1f)).ToList();
+    water.vertices = water.vertices
+      .Select(v => v - new Vector3(1f, 0, 1f))
+      // Put them into the same orientation as webgl.
+      .Select(v => new Vector3(v.x, v.z, 0f))
+      .ToList();
     waterMeshFilter.mesh = water.ToMesh();
 
     // var sphere = MeshDraft.Sphere(0.25f, 10, 10, true);

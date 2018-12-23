@@ -74,8 +74,8 @@ Shader "Unlit/Water"
       {
         v2f o;
 
-        float4 info = tex2Dlod(water, float4(v.vertex.xz * 0.5 + 0.5, 0, 0));
-        o.position = v.vertex.xyz;
+        float4 info = tex2Dlod(water, float4(v.vertex.xy * 0.5 + 0.5, 0, 0));
+        o.position = v.vertex.xzy;
         o.position.y += info.r;
         // o.vertex = UnityObjectToClipPos(v.vertex);
         o.vertex = UnityObjectToClipPos(o.position);
