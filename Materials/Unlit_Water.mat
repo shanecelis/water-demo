@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Unlit_Water
+  m_Shader: {fileID: 4800000, guid: e2bc1aec84f6b4aeb80065fb09bba0bd, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - sky:
+        m_Texture: {fileID: 8900000, guid: e5e2dace18ebc4185a6e9a445cd287b9, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - water:
+        m_Texture: {fileID: 8400000, guid: 98351565d880141d992acdc148b4ee46, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - poolHeight: 1
+    - sphereRadius: 0.25
+    m_Colors:
+    - eye: {r: 0, g: -1, b: 0, a: 0}
+    - light: {r: 0, g: -1, b: 0, a: 0}
+    - sphereCenter: {r: 0, g: 0, b: 0, a: 0}

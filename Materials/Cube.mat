@@ -80,5 +80,5 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - light: {r: 0, g: -1, b: 0, a: 0}
-    - sphereCenter: {r: 0, g: -0.679, b: 0, a: 0}
+    - light: {r: -0.3213938, g: -0.76604444, b: 0.5566705, a: 0}
+    - sphereCenter: {r: 0, g: 0, b: 0, a: 0}

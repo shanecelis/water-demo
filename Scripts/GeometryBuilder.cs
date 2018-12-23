@@ -27,7 +27,8 @@ public class GeometryBuilder : MonoBehaviour {
     water.vertices = water.vertices.Select(v => v - new Vector3(1f, 0, 1f)).ToList();
     waterMeshFilter.mesh = water.ToMesh();
 
-    var sphere = MeshDraft.Sphere(0.25f, 10, 10, true);
+    // var sphere = MeshDraft.Sphere(0.25f, 10, 10, true);
+    var sphere = MeshDraft.Sphere(1f, 10, 10, true);
     sphereMeshFilter.mesh = sphere.ToMesh();
   }
 
