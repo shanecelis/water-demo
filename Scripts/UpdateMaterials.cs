@@ -16,7 +16,9 @@ public class UpdateMaterials : MonoBehaviour {
 	void Update () {
     for (int i = 0; i < materials.Length; i++) {
       materials[i].SetVector("sphereCenter", sphere.position);
-      materials[i].SetVector("light", light.forward);
+      materials[i].SetVector("light", -light.forward);
+      // materials[i].SetVector("light", light.position);
+      materials[i].SetVector("eye", Camera.main.transform.position);
     }
 	}
 }

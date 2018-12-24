@@ -37,6 +37,6 @@ Material:
     - poolHeight: 1
     - sphereRadius: 0.25
     m_Colors:
-    - eye: {r: 0, g: -1, b: 0, a: 0}
-    - light: {r: -0.3213938, g: -0.76604444, b: 0.5566705, a: 0}
+    - eye: {r: 2.1289804, g: 1.1330482, b: -2.3896728, a: 0}
+    - light: {r: 0, g: 3, b: 0, a: 0}
     - sphereCenter: {r: 0, g: 0, b: 0, a: 0}

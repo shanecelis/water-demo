@@ -80,7 +80,8 @@ Shader "CustomRenderTexture/WaterIntegrate"
 
   float4 frag_drop(v2f_customrendertexture IN) : COLOR
   {
-    float4 coord = float4(IN.localTexcoord.xy, 0, 0);
+    // float4 coord = float4(IN.localTexcoord.xy, 0, 0);
+    float2 coord = float2(IN.globalTexcoord.xy);
     /* get vertex info */
     float4 info = tex2D(_SelfTexture2D, coord);
     float2 delta = float2(1 / _CustomRenderTextureWidth, 1 / _CustomRenderTextureHeight);

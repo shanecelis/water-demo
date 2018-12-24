@@ -30,5 +30,5 @@ Material:
     - poolHeight: 1
     - sphereRadius: 0.25
     m_Colors:
-    - light: {r: -0.3213938, g: -0.76604444, b: 0.5566705, a: 0}
+    - light: {r: 0, g: 3, b: 0, a: 0}
     - sphereCenter: {r: 0, g: 0, b: 0, a: 0}

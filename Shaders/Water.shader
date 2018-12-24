@@ -82,7 +82,6 @@ Shader "Unlit/Water"
       v2f vert (appdata v)
       {
         v2f o;
-
         float4 info = tex2Dlod(water, float4(v.vertex.xy * 0.5 + 0.5, 0, 0));
         o.position = v.vertex.xzy;
         o.position.y += info.r;
@@ -111,7 +110,6 @@ Shader "Unlit/Water"
         float3 normal = float3(info.b, sqrt(1.0 - dot(info.ba, info.ba)), info.a);
         float3 incomingRay = normalize(i.position - eye.xyz);
 #if UNDER_WATER
-        float a = 1;
         /* underwater */
         normal = -normal;
         float3 reflectedRay = reflect(incomingRay, normal);
@@ -133,14 +131,6 @@ Shader "Unlit/Water"
 
         fixed4 col = float4(lerp(refractedColor, reflectedColor, fresnel), 1.0);
 #endif
-
-        // fixed4 col = fixed4(getSphereColor(i.position), 1.0);
-        // fixed4 info = tex2D(water, i.position.xz * 0.5 + 0.5);
-        // if (i.position.y < info.r) {
-        //   col.rgb *= underwaterColor * 1.2;
-        // }
-        // apply fog
-        // UNITY_APPLY_FOG(i.fogCoord, col);
         return col;
       }
       ENDCG
