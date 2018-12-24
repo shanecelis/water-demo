@@ -6,9 +6,9 @@ Material:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Unlit_Water Below
-  m_Shader: {fileID: 4800000, guid: e2bc1aec84f6b4aeb80065fb09bba0bd, type: 3}
-  m_ShaderKeywords: UNDER_WATER
+  m_Name: Unlit_Caustics
+  m_Shader: {fileID: 4800000, guid: ec5ad304855b54901a0f2d9211264984, type: 3}
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -22,12 +22,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - sky:
-        m_Texture: {fileID: 8900000, guid: e5e2dace18ebc4185a6e9a445cd287b9, type: 2}
+    - causticTex:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - tiles:
-        m_Texture: {fileID: 2800000, guid: 103e16b9391674926bb162239dcf07ba, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - water:
@@ -35,12 +35,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Cull: 1
-    - _MyCullVariable: 2
-    - _UnderWater: 1
     - poolHeight: 1
     - sphereRadius: 0.25
     m_Colors:
-    - eye: {r: 2.1289804, g: 1.1330482, b: -2.3896728, a: 0}
     - light: {r: 0.3213938, g: 0.76604444, b: -0.5566705, a: 0}
     - sphereCenter: {r: 0, g: -0.766, b: 0.423, a: 0}

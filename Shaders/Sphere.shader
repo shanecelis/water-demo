@@ -8,6 +8,7 @@
     sphereRadius ("Sphere Radius", Float) = 0.25
     light ("Light", Vector) = (0, -1, 0, 0)
     water ("Water", 2D) = "black" {}
+    causticTex ("Caustics", 2D) = "white" {}
   }
   SubShader
   {
@@ -45,9 +46,11 @@
       v2f vert (appdata v)
       {
         v2f o;
+        // o.position = sphereCenter + v.vertex.xyz * sphereRadius;
         o.position = sphereCenter + v.vertex.xyz * sphereRadius;
-        // o.vertex = UnityObjectToClipPos(v.vertex);
-        o.vertex = UnityObjectToClipPos(o.position);
+        o.vertex = UnityObjectToClipPos(v.vertex * sphereRadius);
+        // o.vertex = UnityObjectToClipPos(o.position);
+        // o.vertex = mul(UNITY_MATRIX_MVP, float4(o.position, 1));
         o.uv = TRANSFORM_TEX(v.uv, _MainTex);
         // UNITY_TRANSFER_FOG(o,o.vertex);
         return o;

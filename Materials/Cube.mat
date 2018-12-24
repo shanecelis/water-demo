@@ -54,8 +54,16 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - causticTex:
+        m_Texture: {fileID: 8400000, guid: 3062e5323be2b4230bcb1e33ed472d1f, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - tiles:
         m_Texture: {fileID: 2800000, guid: 103e16b9391674926bb162239dcf07ba, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - water:
+        m_Texture: {fileID: 8600000, guid: 9ac4f57ecbd684ba582087e52f76ccd5, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -80,5 +88,5 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - light: {r: 0, g: 3, b: 0, a: 0}
-    - sphereCenter: {r: 0, g: 0, b: 0, a: 0}
+    - light: {r: 0.3213938, g: 0.76604444, b: -0.5566705, a: 0}
+    - sphereCenter: {r: 0, g: -0.766, b: 0.423, a: 0}

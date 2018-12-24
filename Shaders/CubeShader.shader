@@ -8,6 +8,8 @@
     sphereCenter ("Sphere Center", Vector) = (0, 0, 0, 0)
     sphereRadius ("Sphere Radius", Float) = 0.25
     light ("Light", Vector) = (0, -1, 0, 0)
+    water ("Water", 2D) = "black" {}
+    causticTex ("Caustics", 2D) = "white" {}
 	}
 	SubShader
 	{

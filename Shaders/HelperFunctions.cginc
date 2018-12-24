@@ -78,19 +78,19 @@
     scale *= 1.0 - 0.9 / pow(length(_point - sphereCenter) / sphereRadius, 4.0); /* sphere ambient occlusion */
 
     /* caustics */
-    // float3 refractedLight = -refract(-light, float3(0.0, 1.0, 0.0), IOR_AIR / IOR_WATER);
-    // float diffuse = max(0.0, dot(refractedLight, normal));
-    // float4 info = tex2D(water, _point.xz * 0.5 + 0.5);
-    // if (_point.y < info.r) {
-    //   float4 caustic = tex2D(causticTex, 0.75 * (_point.xz - _point.y * refractedLight.xz / refractedLight.y) * 0.5 + 0.5);
-    //   scale += diffuse * caustic.r * 2.0 * caustic.g;
-    // } else {
-    //   /* shadow for the rim of the pool */
-    //   float2 t = intersectCube(_point, refractedLight, float3(-1.0, -poolHeight, -1.0), float3(1.0, 2.0, 1.0));
-    //   diffuse *= 1.0 / (1.0 + exp(-200.0 / (1.0 + 10.0 * (t.y - t.x)) * (_point.y + refractedLight.y * t.y - 2.0 / 12.0)));
+    float3 refractedLight = -refract(-light, float3(0.0, 1.0, 0.0), IOR_AIR / IOR_WATER);
+    float diffuse = max(0.0, dot(refractedLight, normal));
+    float4 info = tex2D(water, _point.xz * 0.5 + 0.5);
+    if (_point.y < info.r) {
+      float4 caustic = tex2D(causticTex, 0.75 * (_point.xz - _point.y * refractedLight.xz / refractedLight.y) * 0.5 + 0.5);
+      scale += diffuse * caustic.r * 2.0 * caustic.g;
+    } else {
+      /* shadow for the rim of the pool */
+      float2 t = intersectCube(_point, refractedLight, float3(-1.0, -poolHeight, -1.0), float3(1.0, 2.0, 1.0));
+      diffuse *= 1.0 / (1.0 + exp(-200.0 / (1.0 + 10.0 * (t.y - t.x)) * (_point.y + refractedLight.y * t.y - 2.0 / 12.0)));
 
-    //   scale += diffuse * 0.5;
-    // }
+      scale += diffuse * 0.5;
+    }
 
     return wallColor * scale;
   }

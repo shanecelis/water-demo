@@ -3,6 +3,7 @@ Shader "Unlit/Water"
   Properties
   {
     _MainTex ("Texture", 2D) = "white" {}
+    tiles ("Tile Texture", 2D) = "white" {}
     poolHeight ("Pool Height", Float) = 1
     sphereCenter ("Sphere Center", Vector) = (0, 0, 0, 0)
     sphereRadius ("Sphere Radius", Float) = 0.25
