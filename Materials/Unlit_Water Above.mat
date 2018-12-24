@@ -31,6 +31,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Cull: 2
+    - _MyCullVariable: 2
     - _UnderWater: 0
     - poolHeight: 1
     - sphereRadius: 0.25

@@ -12,12 +12,17 @@ Shader "Unlit/Water"
     sky ("Sky Cubemap", Cube) = "white" {}
     [Toggle(UNDER_WATER)]
     _UnderWater ("Under Water?", Float) = 0
+    // [Enum(Off,0,Front,1,Back,2)] _MyCullVariable ("Cull", Int) = 2
+    // https://gist.github.com/smkplus/2a5899bf415e2b6bf6a59726bb1ae2ec
+    [Enum(UnityEngine.Rendering.CullMode)] _Cull("Cull", Float) = 2 //"Back"
+
   }
   SubShader
   {
     Tags { "RenderType"="Opaque" }
     LOD 100
 
+    Cull [_Cull]
     Pass
     {
       CGPROGRAM
