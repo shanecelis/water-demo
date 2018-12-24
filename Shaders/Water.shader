@@ -10,6 +10,8 @@ Shader "Unlit/Water"
     water ("Water", 2D) = "black" {}
     eye ("Eye", Vector) = (0, -1, 0, 0)
     sky ("Sky Cubemap", Cube) = "white" {}
+    [Toggle(UNDER_WATER)]
+    _UnderWater ("Under Water?", Float) = 0
   }
   SubShader
   {
@@ -23,6 +25,8 @@ Shader "Unlit/Water"
       #pragma fragment frag
       // make fog work
       #pragma multi_compile_fog
+      #pragma target 3.0
+      #pragma shader_feature UNDER_WATER
 
       #include "UnityCG.cginc"
       #include "HelperFunctions.cginc"
@@ -101,8 +105,8 @@ Shader "Unlit/Water"
 
         float3 normal = float3(info.b, sqrt(1.0 - dot(info.ba, info.ba)), info.a);
         float3 incomingRay = normalize(i.position - eye.xyz);
-
 #if UNDER_WATER
+        float a = 1;
         /* underwater */
         normal = -normal;
         float3 reflectedRay = reflect(incomingRay, normal);
@@ -110,7 +114,7 @@ Shader "Unlit/Water"
         float fresnel = lerp(0.5, 1.0, pow(1.0 - dot(normal, -incomingRay), 3.0));
 
         float3 reflectedColor = getSurfaceRayColor(i.position, reflectedRay, underwaterColor);
-        float3 refractedColor = getSurfaceRayColor(i.position, refractedRay, float3(1.0)) * float3(0.8, 1.0, 1.1);
+        float3 refractedColor = getSurfaceRayColor(i.position, refractedRay, float3(1, 1, 1)) * float3(0.8, 1.0, 1.1);
 
         fixed4 col = float4(lerp(reflectedColor, refractedColor, (1.0 - fresnel) * length(refractedRay)), 1.0);
 #else

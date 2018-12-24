@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Unlit_Water
+  m_Name: Unlit_Water Above
   m_Shader: {fileID: 4800000, guid: e2bc1aec84f6b4aeb80065fb09bba0bd, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -27,13 +27,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - water:
-        m_Texture: {fileID: 8400000, guid: 98351565d880141d992acdc148b4ee46, type: 2}
+        m_Texture: {fileID: 8600000, guid: 9ac4f57ecbd684ba582087e52f76ccd5, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _UnderWater: 0
     - poolHeight: 1
     - sphereRadius: 0.25
     m_Colors:
     - eye: {r: 0, g: -1, b: 0, a: 0}
-    - light: {r: 0, g: -1, b: 0, a: 0}
+    - light: {r: -0.3213938, g: -0.76604444, b: 0.5566705, a: 0}
     - sphereCenter: {r: 0, g: 0, b: 0, a: 0}
