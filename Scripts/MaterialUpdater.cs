@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpdateMaterials : MonoBehaviour {
+[ExecuteInEditMode]
+public class MaterialUpdater : MonoBehaviour {
 
   public Material[] materials;
   public Transform sphere;
@@ -10,15 +11,23 @@ public class UpdateMaterials : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+  }
+
+  void OnEnable() {
+    Camera.onPreRender += UpdateMaterials;
 	}
 
-	// Update is called once per frame
-	void Update () {
+  void OnDisable() {
+    Camera.onPreRender -= UpdateMaterials;
+  }
+
+	void UpdateMaterials(Camera camera) {
     for (int i = 0; i < materials.Length; i++) {
       materials[i].SetVector("sphereCenter", sphere.position);
       materials[i].SetVector("light", -light.forward);
       // materials[i].SetVector("light", light.position);
-      materials[i].SetVector("eye", Camera.main.transform.position);
+      materials[i].SetVector("eye", camera.transform.position);
     }
 	}
 }
