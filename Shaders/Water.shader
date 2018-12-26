@@ -121,6 +121,8 @@ Shader "Unlit/Water"
         float3 refractedColor = getSurfaceRayColor(i.position, refractedRay, float3(1, 1, 1)) * float3(0.8, 1.0, 1.1);
 
         fixed4 col = float4(lerp(reflectedColor, refractedColor, (1.0 - fresnel) * length(refractedRay)), 1.0);
+        // fixed4 col = float4(reflectedColor, 1);
+        // fixed4 col = float4(refractedColor, 1);
 #else
         /* above water */
         float3 reflectedRay = reflect(incomingRay, normal);

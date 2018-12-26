@@ -7,11 +7,40 @@ using UnityEngine.EventSystems;
 public class WaterSimulation : MonoBehaviour, IPointerClickHandler, IDragHandler {
   public CustomRenderTexture texture;
   private CustomRenderTextureUpdateZone[] zones = null;
+  public float dropRadius = 1f; // uv units [0, 1]
+  public bool pause = false;
 
   private Collider collider;
+  private CustomRenderTextureUpdateZone defaultZone, normalZone, clickZone;
   void Start() {
     texture.Initialize();
     collider = GetComponent<Collider>();
+
+    defaultZone = new CustomRenderTextureUpdateZone();
+    defaultZone.needSwap = true;
+    defaultZone.passIndex = 0;
+    defaultZone.rotation = 0f;
+    defaultZone.updateZoneCenter = new Vector2(0.5f, 0.5f);
+    defaultZone.updateZoneSize = new Vector2(1f, 1f);
+
+    normalZone = new CustomRenderTextureUpdateZone();
+    normalZone.needSwap = true;
+    normalZone.passIndex = 2;
+    normalZone.rotation = 0f;
+    normalZone.updateZoneCenter = new Vector2(0.5f, 0.5f);
+    normalZone.updateZoneSize = new Vector2(1f, 1f);
+
+    clickZone = new CustomRenderTextureUpdateZone();
+    clickZone.needSwap = true;
+    clickZone.passIndex = 1; // drop
+    clickZone.rotation = 0f;
+    // clickZone.updateZoneCenter = uv;
+    // clickZone.updateZoneCenter = new Vector2(0.5f, 0.5f);
+    clickZone.updateZoneSize = new Vector2(dropRadius, dropRadius);
+    // clickZone.updateZoneSize = new Vector2(1f, 1f);
+
+    texture.ClearUpdateZones();
+    texture.SetUpdateZones(new CustomRenderTextureUpdateZone[] { defaultZone, defaultZone, normalZone });
   }
 
   public void OnDrag(PointerEventData ped) {
@@ -39,54 +68,48 @@ public class WaterSimulation : MonoBehaviour, IPointerClickHandler, IDragHandler
   }
 
   void AddWave(Vector2 uv, int passIndex) {
-
-    var defaultZone = new CustomRenderTextureUpdateZone();
-    defaultZone.needSwap = true;
-    defaultZone.passIndex = 0; // 波動方程式のシミュレーションのパス
-    defaultZone.rotation = 0f;
-    defaultZone.updateZoneCenter = new Vector2(0.5f, 0.5f);
-    defaultZone.updateZoneSize = new Vector2(1f, 1f);
-
-    var clickZone = new CustomRenderTextureUpdateZone();
-    clickZone.needSwap = true;
-    clickZone.passIndex = 1;
-    clickZone.rotation = 0f;
-    // clickZone.updateZoneCenter = uv;
     clickZone.updateZoneCenter = new Vector2(uv.x, 1 - uv.y);
-    clickZone.updateZoneSize = new Vector2(0.1f, 0.1f);
-    // clickZone.updateZoneCenter = new Vector2(0.5f, 0.5f);
-    // clickZone.updateZoneSize = new Vector2(1f, 1f);
 
-    zones = new CustomRenderTextureUpdateZone[] { defaultZone, clickZone };
-
+    if (pause) {
+      zones = new CustomRenderTextureUpdateZone[] { clickZone, normalZone };
+    } else {
+      zones = new CustomRenderTextureUpdateZone[] { defaultZone, defaultZone, clickZone, normalZone };
+    }
     // texture.Update(1);
   }
 
   void Update() {
-    // UpdateZones();
+    if (Input.GetKeyDown(KeyCode.Space))
+      pause = !pause;
+    UpdateZones();
     if (zones != null) {
       texture.SetUpdateZones(zones);
       zones = null;
     } else {
-      texture.ClearUpdateZones();
+      // texture.ClearUpdateZones();
+      texture.SetUpdateZones(new CustomRenderTextureUpdateZone[] { defaultZone, defaultZone, normalZone });
     }
-    texture.Update(1);
+    // if (! pause
+    //     || Input.GetKeyDown(KeyCode.N))
+      texture.Update(1);
   }
 
-  // void UpdateZones() {
-  //   if (collider == null) return;
-  //   bool leftClick = Input.GetMouseButton(0);
-  //   bool rightClick = Input.GetMouseButton(1);
-  //   if (!leftClick && !rightClick) return;
+  void UpdateZones() {
+    if (collider == null) return;
+    bool leftClick = Input.GetMouseButtonDown(0);
+    bool rightClick = Input.GetMouseButtonDown(1);
+    // bool leftClick = Input.GetMouseButton(0);
+    // bool rightClick = Input.GetMouseButton(1);
+    if (!leftClick && !rightClick) return;
 
-  //   RaycastHit hit;
-  //   var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-  //   // if (Physics.Raycast(ray, out hit)
-  //   //     && hit.transform == transform) {
+    RaycastHit hit;
+    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    // if (Physics.Raycast(ray, out hit)
+    //     && hit.transform == transform) {
 
-  //   if (collider.Raycast(ray, out hit, 100f)) {
-  //     Debug.Log("Clicked uv " + hit.textureCoord2);
-  //     AddWave(hit.textureCoord2, leftClick ? 2 : 3);
-  //   }
-  // }
+    if (collider.Raycast(ray, out hit, 100f)) {
+      Debug.Log("Clicked uv " + hit.textureCoord2);
+      AddWave(hit.textureCoord2, leftClick ? 2 : 3);
+    }
+  }
 }

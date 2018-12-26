@@ -28,14 +28,16 @@ Shader "CustomRenderTexture/WaterIntegrate"
   fixed4 frag_integrate(v2f_customrendertexture IN) : COLOR
   {
     float2 delta = float2(1 / _CustomRenderTextureWidth, 1 / _CustomRenderTextureHeight);
-    float2 coord = float2(IN.localTexcoord.xy);
+    float2 coord = IN.globalTexcoord.xy;
 
     /* get vertex info */
     float4 info = tex2D(_SelfTexture2D, coord);
 
     /* calculate average neighbor height */
-    float2 dx = float2(delta.x, 0.0);
-    float2 dy = float2(0.0, delta.y);
+    // float2 dx = float2(delta.x, 0.0);
+    // float2 dy = float2(0.0, delta.y);
+    float2 dx = ddx(coord);
+    float2 dy = ddy(coord);
     float average = (
       tex2D(_SelfTexture2D, coord - dx).r +
       tex2D(_SelfTexture2D, coord - dy).r +
@@ -52,12 +54,11 @@ Shader "CustomRenderTexture/WaterIntegrate"
     /* move the vertex along the velocity */
     info.r += info.g;
 
-    /* Let's just update the normal while we're at it. */
-
-    /* update the normal */
-    float3 dx2 = float3(delta.x, tex2D(_SelfTexture2D, float2(coord.x + delta.x, coord.y)).r - info.r, 0.0);
-    float3 dy2 = float3(0.0, tex2D(_SelfTexture2D, float2(coord.x, coord.y + delta.y)).r - info.r, delta.y);
-    info.ba = normalize(cross(dy2, dx2)).xz;
+    // /* Let's just update the normal while we're at it. */
+    // /* update the normal */
+    // float3 dx2 = float3(delta.x, tex2D(_SelfTexture2D, float2(coord.x + delta.x, coord.y)).r - info.r, 0.0);
+    // float3 dy2 = float3(0.0, tex2D(_SelfTexture2D, float2(coord.x, coord.y + delta.y)).r - info.r, delta.y);
+    // info.ba = normalize(cross(dy2, dx2)).xz;
     fixed4 col = info;
     // col.a = 1;
     return col;
@@ -80,14 +81,15 @@ Shader "CustomRenderTexture/WaterIntegrate"
 
   float4 frag_drop(v2f_customrendertexture IN) : COLOR
   {
-    // float4 coord = float4(IN.localTexcoord.xy, 0, 0);
-    float2 coord = float2(IN.globalTexcoord.xy);
+    float2 coord = IN.localTexcoord.xy;
+    // float2 coord = float2(IN.globalTexcoord.xy);
     /* get vertex info */
-    float4 info = tex2D(_SelfTexture2D, coord);
-    float2 delta = float2(1 / _CustomRenderTextureWidth, 1 / _CustomRenderTextureHeight);
+    // float4 info = tex2D(_SelfTexture2D, coord);
+    float4 info = tex2D(_SelfTexture2D, IN.globalTexcoord.xy);
 
     /* add the drop to the height */
-    float drop = max(0.0, 1.0 - length(center * 0.5 + 0.5 - coord) / radius);
+    // float drop = max(0.0, 1.0 - length(center * 0.5 + 0.5 - coord) / radius);
+    float drop = max(0, 1.0 - length(float2(0.5, 0.5) - coord) / 0.5);
     drop = 0.5 - cos(drop * PI) * 0.5;
     info.r += drop * strength;
 
