@@ -69,8 +69,9 @@ Shader "Unlit/Caustics"
         o.ray = refract(-light, normal, IOR_AIR / IOR_WATER);
         o.oldPos = project(v.vertex.xzy, refractedLight, refractedLight);
         o.newPos = project(v.vertex.xzy + float3(0.0, info.r, 0.0), o.ray, refractedLight);
-
+        // o.vertex = float4(0.75 * (o.newPos.xz + refractedLight.xz / refractedLight.y), 0.0, 1.0);
         o.vertex = float4(0.75 * (o.newPos.xz + refractedLight.xz / refractedLight.y), 0.0, 1.0);
+        // o.vertex.y *= 1;
 
         // o.position = v.vertex.xyz;
         // // o.worldPos = mul (unity_ObjectToWorld, v.vertex);
@@ -99,7 +100,10 @@ Shader "Unlit/Caustics"
         float3 refractedLight = refract(-light, float3(0.0, 1.0, 0.0), IOR_AIR / IOR_WATER);
 
         /* compute a blob shadow and make sure we only draw a shadow if the player is blocking the light */
-        float3 dir = (sphereCenter - i.newPos) / sphereRadius;
+        // float3 dir = (float3(sphereCenter.xy, -sphereCenter.z) - i.newPos) / sphereRadius;
+        // float3 dir = (float3(sphereCenter.xy, sphereCenter.z) - i.newPos) / sphereRadius;
+        // float3 dir = (float3(sphereCenter.xy, -sphereCenter.z) - i.oldPos) / sphereRadius;
+        float3 dir = (sphereCenter - i.oldPos) / sphereRadius;
         float3 area = cross(dir, refractedLight);
         float shadow = dot(area, area);
         float dist = dot(dir, -refractedLight);

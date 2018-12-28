@@ -58,6 +58,11 @@
     return color;
   }
 
+float2 flipY(float2 v) {
+  v.y = 1 - v.y;
+  return v;
+}
+
   float3 getWallColor(float3 _point) {
     float scale = 0.5;
 
@@ -82,7 +87,8 @@
     float diffuse = max(0.0, dot(refractedLight, normal));
     float4 info = tex2D(water, _point.xz * 0.5 + 0.5);
     if (_point.y < info.r) {
-      float4 caustic = tex2D(causticTex, 0.75 * (_point.xz - _point.y * refractedLight.xz / refractedLight.y) * 0.5 + 0.5);
+      // float4 caustic = tex2D(causticTex, 0.75 * (_point.xz - _point.y * refractedLight.xz / refractedLight.y) * 0.5 + 0.5);
+    float4 caustic = tex2D(causticTex, flipY(0.75 * (_point.xz - _point.y * refractedLight.xz / refractedLight.y) * 0.5 + 0.5));
       scale += diffuse * caustic.r * 2.0 * caustic.g;
     } else {
       /* shadow for the rim of the pool */
