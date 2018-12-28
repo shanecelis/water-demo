@@ -2,7 +2,7 @@ Shader "Unlit/Caustics"
 {
   Properties
   {
-    _MainTex ("Texture", 2D) = "white" {}
+    // _MainTex ("Texture", 2D) = "white" {}
     tiles ("Tile Texture", 2D) = "white" {}
     poolHeight ("Pool Height", Float) = 1
     sphereCenter ("Sphere Center", Vector) = (0, 0, 0, 0)
@@ -15,7 +15,6 @@ Shader "Unlit/Caustics"
     Tags { "RenderType"="Opaque" }
     LOD 100
     Cull Off
-    // Cull Back
 
     Pass
     {
@@ -32,33 +31,22 @@ Shader "Unlit/Caustics"
       struct appdata
       {
         float4 vertex : POSITION;
-        float2 uv : TEXCOORD0;
+        // float2 uv : TEXCOORD0;
       };
 
       struct v2f
       {
-        float2 uv : TEXCOORD0;
+        // float2 uv : TEXCOORD0;
         // UNITY_FOG_COORDS(1)
         float4 vertex : SV_POSITION;
         float3 oldPos : TEXCOORD1;
         float3 newPos : TEXCOORD2;
-        float3 ray : TEXCOORD3;
+        // float3 ray : TEXCOORD3;
         // float3 worldPos : TEXCOORD1;
       };
 
-      sampler2D _MainTex;
-      float4 _MainTex_ST;
-
-      /**
-
-      This shader produces a texture that has its Y-component flipped compared
-      to the water texture. This is, of course, not preferred and it requires a
-      flipY() hack when reading from the caustics texture. This was not present
-      in Evan's webGL version. It must have to do with some small difference
-      between WebGL and Unity. However, try as I might I have not been able to
-      cleanly rectify it.
-
-      */
+      // sampler2D _MainTex;
+      // float4 _MainTex_ST;
 
       /* project the ray onto the plane */
       float3 project(float3 origin, float3 ray, float3 refractedLight) {
@@ -77,24 +65,17 @@ Shader "Unlit/Caustics"
 
         /* project the vertices along the refracted vertex ray */
         float3 refractedLight = refract(-light, float3(0.0, 1.0, 0.0), IOR_AIR / IOR_WATER);
-        o.ray = refract(-light, normal, IOR_AIR / IOR_WATER);
+        float3 ray = refract(-light, normal, IOR_AIR / IOR_WATER);
         o.oldPos = project(v.vertex.xzy, refractedLight, refractedLight);
-        o.newPos = project(v.vertex.xzy + float3(0.0, info.r, 0.0), o.ray, refractedLight);
-        // o.vertex = float4(0.75 * (o.newPos.xz + refractedLight.xz / refractedLight.y), 0.0, 1.0);
+        o.newPos = project(v.vertex.xzy + float3(0.0, info.r, 0.0), ray, refractedLight);
         o.vertex = float4(0.75 * (o.newPos.xz + refractedLight.xz / refractedLight.y), 0.0, 1.0);
         /* This fixes the texture being Y-inverted, but it changes the triangle
            face, so the Cull was changed from Cull Back to Cull Off. */
         o.vertex.y *= -1;
 
-        // o.position = v.vertex.xyz;
-        // // o.worldPos = mul (unity_ObjectToWorld, v.vertex);
-
-        // // o.vertex = UnityObjectToClipPos(v.vertex);
-        // o.position.y = ((1.0 - o.position.y) * (7.0 / 12.0) - 1.0) * poolHeight;
-
         // o.vertex = UnityObjectToClipPos(o.position);
         // o.vertex = mul(UNITY_MATRIX_VP, float4(o.worldPos, 1));
-        o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+        // o.uv = TRANSFORM_TEX(v.uv, _MainTex);
         // UNITY_TRANSFER_FOG(o,o.vertex);
         return o;
       }
@@ -113,9 +94,6 @@ Shader "Unlit/Caustics"
         float3 refractedLight = refract(-light, float3(0.0, 1.0, 0.0), IOR_AIR / IOR_WATER);
 
         /* compute a blob shadow and make sure we only draw a shadow if the player is blocking the light */
-        // float3 dir = (float3(sphereCenter.xy, -sphereCenter.z) - i.newPos) / sphereRadius;
-        // float3 dir = (float3(sphereCenter.xy, sphereCenter.z) - i.newPos) / sphereRadius;
-        // float3 dir = (float3(sphereCenter.xy, -sphereCenter.z) - i.oldPos) / sphereRadius;
         float3 dir = (sphereCenter - i.oldPos) / sphereRadius;
         float3 area = cross(dir, refractedLight);
         float shadow = dot(area, area);
@@ -129,7 +107,6 @@ Shader "Unlit/Caustics"
         float2 t = intersectCube(i.newPos, -refractedLight, float3(-1.0, -poolHeight, -1.0), float3(1.0, 2.0, 1.0));
         col.r *= 1.0 / (1.0 + exp(-200.0 / (1.0 + 10.0 * (t.y - t.x)) * (i.newPos.y - refractedLight.y * t.y - 2.0 / 12.0)));
 
-        // col.rgba = 1;
         // apply fog
         // UNITY_APPLY_FOG(i.fogCoord, col);
         return col;

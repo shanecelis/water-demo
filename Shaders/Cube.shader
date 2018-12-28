@@ -2,7 +2,7 @@
 {
 	Properties
 	{
-		_MainTex ("Texture", 2D) = "white" {}
+		// _MainTex ("Texture", 2D) = "white" {}
     tiles ("Tile Texture", 2D) = "white" {}
     poolHeight ("Pool Height", Float) = 1
     sphereCenter ("Sphere Center", Vector) = (0, 0, 0, 0)
@@ -31,20 +31,20 @@
 			struct appdata
 			{
 				float4 vertex : POSITION;
-				float2 uv : TEXCOORD0;
+				// float2 uv : TEXCOORD0;
 			};
 
 			struct v2f
 			{
-				float2 uv : TEXCOORD0;
+				// float2 uv : TEXCOORD0;
 				// UNITY_FOG_COORDS(1)
 				float4 vertex : SV_POSITION;
 				float3 position : TEXCOORD2;
         // float3 worldPos : TEXCOORD1;
 			};
 
-			sampler2D _MainTex;
-			float4 _MainTex_ST;
+			// sampler2D _MainTex;
+			// float4 _MainTex_ST;
 
 			v2f vert (appdata v)
 			{
@@ -52,13 +52,12 @@
 
         o.position = v.vertex.xyz;
         // o.worldPos = mul (unity_ObjectToWorld, v.vertex);
-
 				// o.vertex = UnityObjectToClipPos(v.vertex);
         o.position.y = ((1.0 - o.position.y) * (7.0 / 12.0) - 1.0) * poolHeight;
 
 				o.vertex = UnityObjectToClipPos(o.position);
         // o.vertex = mul(UNITY_MATRIX_VP, float4(o.worldPos, 1));
-				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+				// o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 				// UNITY_TRANSFER_FOG(o,o.vertex);
 				return o;
 			}
