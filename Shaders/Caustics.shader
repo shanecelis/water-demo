@@ -48,6 +48,16 @@ Shader "Unlit/Caustics"
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 
+      /**
+
+      This shader produces a texture that has its Y-component flipped compared
+      to the water texture. This is, of course, not preferred and it requires a
+      flipY() hack when reading from the caustics texture. This was not present
+      in Evan's webGL version. It must have to do with some small difference
+      between WebGL and Unity. However, try as I might I have not been able to
+      cleanly rectify it.
+
+      */
 
       /* project the ray onto the plane */
       float3 project(float3 origin, float3 ray, float3 refractedLight) {
