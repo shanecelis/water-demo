@@ -14,7 +14,8 @@ Shader "Unlit/Caustics"
   {
     Tags { "RenderType"="Opaque" }
     LOD 100
-    Cull Front
+    Cull Off
+    // Cull Back
 
     Pass
     {
@@ -22,7 +23,7 @@ Shader "Unlit/Caustics"
       #pragma vertex vert
       #pragma fragment frag
       // make fog work
-      #pragma multi_compile_fog
+      // #pragma multi_compile_fog
       #define HAS_DERIVATIVES
 
       #include "UnityCG.cginc"
@@ -37,7 +38,7 @@ Shader "Unlit/Caustics"
       struct v2f
       {
         float2 uv : TEXCOORD0;
-        UNITY_FOG_COORDS(1)
+        // UNITY_FOG_COORDS(1)
         float4 vertex : SV_POSITION;
         float3 oldPos : TEXCOORD1;
         float3 newPos : TEXCOORD2;
@@ -81,7 +82,9 @@ Shader "Unlit/Caustics"
         o.newPos = project(v.vertex.xzy + float3(0.0, info.r, 0.0), o.ray, refractedLight);
         // o.vertex = float4(0.75 * (o.newPos.xz + refractedLight.xz / refractedLight.y), 0.0, 1.0);
         o.vertex = float4(0.75 * (o.newPos.xz + refractedLight.xz / refractedLight.y), 0.0, 1.0);
-        // o.vertex.y *= 1;
+        /* This fixes the texture being Y-inverted, but it changes the triangle
+           face, so the Cull was changed from Cull Back to Cull Off. */
+        o.vertex.y *= -1;
 
         // o.position = v.vertex.xyz;
         // // o.worldPos = mul (unity_ObjectToWorld, v.vertex);
