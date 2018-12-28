@@ -1,52 +1,52 @@
 Shader "Unlit/Caustics"
 {
-	Properties
-	{
-		_MainTex ("Texture", 2D) = "white" {}
+  Properties
+  {
+    _MainTex ("Texture", 2D) = "white" {}
     tiles ("Tile Texture", 2D) = "white" {}
     poolHeight ("Pool Height", Float) = 1
     sphereCenter ("Sphere Center", Vector) = (0, 0, 0, 0)
     sphereRadius ("Sphere Radius", Float) = 0.25
     light ("Light", Vector) = (0, -1, 0, 0)
     water ("Water", 2D) = "black" {}
-	}
-	SubShader
-	{
-		Tags { "RenderType"="Opaque" }
-		LOD 100
+  }
+  SubShader
+  {
+    Tags { "RenderType"="Opaque" }
+    LOD 100
     Cull Front
 
-		Pass
-		{
-			CGPROGRAM
-			#pragma vertex vert
-			#pragma fragment frag
-			// make fog work
-			#pragma multi_compile_fog
+    Pass
+    {
+      CGPROGRAM
+      #pragma vertex vert
+      #pragma fragment frag
+      // make fog work
+      #pragma multi_compile_fog
       #define HAS_DERIVATIVES
 
-			#include "UnityCG.cginc"
+      #include "UnityCG.cginc"
       #include "HelperFunctions.cginc"
 
-			struct appdata
-			{
-				float4 vertex : POSITION;
-				float2 uv : TEXCOORD0;
-			};
+      struct appdata
+      {
+        float4 vertex : POSITION;
+        float2 uv : TEXCOORD0;
+      };
 
-			struct v2f
-			{
-				float2 uv : TEXCOORD0;
-				UNITY_FOG_COORDS(1)
-				float4 vertex : SV_POSITION;
-				float3 oldPos : TEXCOORD1;
-				float3 newPos : TEXCOORD2;
-				float3 ray : TEXCOORD3;
+      struct v2f
+      {
+        float2 uv : TEXCOORD0;
+        UNITY_FOG_COORDS(1)
+        float4 vertex : SV_POSITION;
+        float3 oldPos : TEXCOORD1;
+        float3 newPos : TEXCOORD2;
+        float3 ray : TEXCOORD3;
         // float3 worldPos : TEXCOORD1;
-			};
+      };
 
-			sampler2D _MainTex;
-			float4 _MainTex_ST;
+      sampler2D _MainTex;
+      float4 _MainTex_ST;
 
       /**
 
@@ -67,9 +67,9 @@ Shader "Unlit/Caustics"
         return origin + refractedLight * tplane;
       }
 
-			v2f vert (appdata v)
-			{
-				v2f o;
+      v2f vert (appdata v)
+      {
+        v2f o;
         float4 info = tex2Dlod(water, float4(v.vertex.xy * 0.5 + 0.5, 0, 0));
         info.ba *= 0.5;
         float3 normal = float3(info.b, sqrt(1.0 - dot(info.ba, info.ba)), info.a);
@@ -86,26 +86,26 @@ Shader "Unlit/Caustics"
         // o.position = v.vertex.xyz;
         // // o.worldPos = mul (unity_ObjectToWorld, v.vertex);
 
-				// // o.vertex = UnityObjectToClipPos(v.vertex);
+        // // o.vertex = UnityObjectToClipPos(v.vertex);
         // o.position.y = ((1.0 - o.position.y) * (7.0 / 12.0) - 1.0) * poolHeight;
 
-				// o.vertex = UnityObjectToClipPos(o.position);
+        // o.vertex = UnityObjectToClipPos(o.position);
         // o.vertex = mul(UNITY_MATRIX_VP, float4(o.worldPos, 1));
-				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-				// UNITY_TRANSFER_FOG(o,o.vertex);
-				return o;
-			}
+        o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+        // UNITY_TRANSFER_FOG(o,o.vertex);
+        return o;
+      }
 
-			fixed4 frag (v2f i) : SV_Target
-			{
-#if defined(HAS_DERIVATIVES)
+      fixed4 frag (v2f i) : SV_Target
+      {
+        #if defined(HAS_DERIVATIVES)
         /* if the triangle gets smaller, it gets brighter, and vice versa */
         float oldArea = length(ddx(i.oldPos)) * length(ddy(i.oldPos));
         float newArea = length(ddx(i.newPos)) * length(ddy(i.newPos));
         fixed4 col = float4(oldArea / newArea * 0.2, 1.0, 0.0, 0.0);
-#else
+        #else
         fixed4 col = float4(0.2, 0.2, 0.0, 0.0);
-#endif
+        #endif
 
         float3 refractedLight = refract(-light, float3(0.0, 1.0, 0.0), IOR_AIR / IOR_WATER);
 
@@ -127,11 +127,11 @@ Shader "Unlit/Caustics"
         col.r *= 1.0 / (1.0 + exp(-200.0 / (1.0 + 10.0 * (t.y - t.x)) * (i.newPos.y - refractedLight.y * t.y - 2.0 / 12.0)));
 
         // col.rgba = 1;
-			  // apply fog
-			  // UNITY_APPLY_FOG(i.fogCoord, col);
-			  return col;
-		}
-		ENDCG
-	}
-}
+        // apply fog
+        // UNITY_APPLY_FOG(i.fogCoord, col);
+        return col;
+      }
+      ENDCG
+    }
+  }
 }
