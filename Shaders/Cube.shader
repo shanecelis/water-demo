@@ -1,4 +1,4 @@
-﻿Shader "Unlit/CubeShader"
+﻿Shader "Unlit/Cube"
 {
 	Properties
 	{
