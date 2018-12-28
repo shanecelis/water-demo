@@ -1,6 +1,6 @@
 * TODO
-  - [ ] Sphere shadow is not working.
-  - [ ] Make camera pivot-able.
+  - [X] Sphere shadow is not working.
+  - [X] Make camera pivot-able.
   - [ ] Add ripples
   - [ ] Made sphere draggable.
   - [ ] Add sphere physics.

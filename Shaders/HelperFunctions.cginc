@@ -6,7 +6,7 @@ static const float IOR_AIR = 1.0;
 static const float IOR_WATER = 1.333;
 static const float3 abovewaterColor = float3(0.25, 1.0, 1.25);
 static const float3 underwaterColor = float3(0.4, 0.9, 1.0);
-float poolHeight = 1.0;
+float poolHeight;
 float3 light;
 float3 sphereCenter;
 float sphereRadius;

@@ -11,7 +11,7 @@ public class WaterSimulation : MonoBehaviour, IPointerClickHandler, IDragHandler
 
   private CustomRenderTextureUpdateZone[] zones = null;
   private Collider collider;
-  private CustomRenderTextureUpdateZone defaultZone, normalZone, clickZone;
+  private CustomRenderTextureUpdateZone defaultZone, normalZone, waveZone;
 
   void Start() {
     texture.Initialize();
@@ -31,22 +31,21 @@ public class WaterSimulation : MonoBehaviour, IPointerClickHandler, IDragHandler
     normalZone.updateZoneCenter = new Vector2(0.5f, 0.5f);
     normalZone.updateZoneSize = new Vector2(1f, 1f);
 
-    clickZone = new CustomRenderTextureUpdateZone();
-    clickZone.needSwap = true;
-    clickZone.passIndex = 1; // drop
-    clickZone.rotation = 0f;
-    // clickZone.updateZoneCenter = uv;
-    // clickZone.updateZoneCenter = new Vector2(0.5f, 0.5f);
-    clickZone.updateZoneSize = new Vector2(dropRadius, dropRadius);
-    // clickZone.updateZoneSize = new Vector2(1f, 1f);
+    waveZone = new CustomRenderTextureUpdateZone();
+    waveZone.needSwap = true;
+    waveZone.passIndex = 1; // drop
+    waveZone.rotation = 0f;
+    // waveZone.updateZoneCenter = uv;
+    waveZone.updateZoneSize = new Vector2(dropRadius, dropRadius);
 
-    texture.SetUpdateZones(new CustomRenderTextureUpdateZone[] { clickZone, normalZone });
+    var waves = new List<CustomRenderTextureUpdateZone>();
     for (int i = 0; i < 20; i++) {
-      clickZone.updateZoneCenter = new Vector2(Random.Range(0f, 1f),
-                                               1f - Random.Range(0f, 1f));
-      texture.Update(1);
+      waveZone.updateZoneCenter = new Vector2(Random.Range(0f, 1f),
+                                              Random.Range(0f, 1f));
+      // CustomRenderTextureUpdateZone is a struct so this is a copy operation.
+      waves.Add(waveZone);
     }
-    // texture.ClearUpdateZones();
+    zones = waves.ToArray();
   }
 
   public void OnDrag(PointerEventData ped) {
@@ -69,18 +68,18 @@ public class WaterSimulation : MonoBehaviour, IPointerClickHandler, IDragHandler
 
     var leftClick = ped.button == PointerEventData.InputButton.Left;
 
-    Debug.Log("We got a click " + localCursor + " uv " + uv);
+    // Debug.Log("We got a click " + localCursor + " uv " + uv);
     // AddWave(uv, leftClick ? 2 : 3); // 1 または -1 にバッファを塗るパス);
     AddWave(uv);
   }
 
   void AddWave(Vector2 uv) {
-    clickZone.updateZoneCenter = new Vector2(uv.x, 1f - uv.y);
+    waveZone.updateZoneCenter = new Vector2(uv.x, 1f - uv.y);
 
     if (pause) {
-      zones = new CustomRenderTextureUpdateZone[] { clickZone, normalZone };
+      zones = new CustomRenderTextureUpdateZone[] { waveZone, normalZone };
     } else {
-      zones = new CustomRenderTextureUpdateZone[] { defaultZone, defaultZone, clickZone, normalZone };
+      zones = new CustomRenderTextureUpdateZone[] { defaultZone, defaultZone, waveZone, normalZone };
     }
     // texture.Update(1);
   }
@@ -92,6 +91,8 @@ public class WaterSimulation : MonoBehaviour, IPointerClickHandler, IDragHandler
     if (zones != null) {
       texture.SetUpdateZones(zones);
       zones = null;
+      if (pause)
+        texture.Update(1);
     } else {
       texture.SetUpdateZones(new CustomRenderTextureUpdateZone[] { defaultZone, defaultZone, normalZone });
     }
