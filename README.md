@@ -20,6 +20,8 @@ Usage
 
 Create a new project using Unity 2018.2.17f1. Clone this repo into the "Assets" directory.  Open the "cube-of-water" scene and hit play.
 
+![Click on water to cause a wave.](clickable.gif)
+
 You can click on the water to cause a wave.  You can drag to move the camera around.  Hit "space" key to pause water simulation.  Hit "n" key to update the simulation one time step.
 
 Implementation Notes

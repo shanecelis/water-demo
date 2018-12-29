@@ -17,6 +17,7 @@ public class WaterSimulation : MonoBehaviour, IPointerClickHandler, IDragHandler
   public CustomRenderTexture texture;
   public float dropRadius = 1f; // uv units [0, 1]
   public bool pause = false;
+  public int initialDropCount = 20;
 
   private CustomRenderTextureUpdateZone[] zones = null;
   private Collider collider;
@@ -48,7 +49,7 @@ public class WaterSimulation : MonoBehaviour, IPointerClickHandler, IDragHandler
     waveZone.updateZoneSize = new Vector2(dropRadius, dropRadius);
 
     var waves = new List<CustomRenderTextureUpdateZone>();
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < initialDropCount; i++) {
       waveZone.updateZoneCenter = new Vector2(Random.Range(0f, 1f),
                                               Random.Range(0f, 1f));
       // CustomRenderTextureUpdateZone is a struct so this is a copy operation.
