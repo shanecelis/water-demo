@@ -115,7 +115,7 @@ public class WaterSimulation : MonoBehaviour, IPointerClickHandler, IDragHandler
     //     && hit.transform == transform) {
 
     if (collider.Raycast(ray, out hit, 100f)) {
-      Debug.Log("Clicked uv " + hit.textureCoord2);
+      // Debug.Log("Clicked uv " + hit.textureCoord2);
       // AddWave(hit.textureCoord2, leftClick ? 2 : 3);
       AddWave(hit.textureCoord2);
     }
