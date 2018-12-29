@@ -1,3 +1,5 @@
+//$ cite -u https://github.com/evanw/webgl-water -U https://github.com/shanecelis/water-demo -mC -l mit
+
 Shader "Unlit/Water"
 {
   Properties
@@ -120,6 +122,9 @@ Shader "Unlit/Water"
         float3 reflectedColor = getSurfaceRayColor(i.position, reflectedRay, underwaterColor);
         float3 refractedColor = getSurfaceRayColor(i.position, refractedRay, float3(1, 1, 1)) * float3(0.8, 1.0, 1.1);
 
+        // XXX This lerp is not working. If you provide 0 as its last argument or multiply by 0, it
+        // shows the reflectedColor.  If however, you multiply its last argument by 0.00000001, you
+        // get a black surface.
         fixed4 col = float4(lerp(reflectedColor, refractedColor, (1.0 - fresnel) * length(refractedRay)), 1.0);
         // fixed4 col = float4(reflectedColor, 1);
         // fixed4 col = float4(refractedColor, 1);

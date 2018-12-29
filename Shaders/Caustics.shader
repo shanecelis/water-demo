@@ -1,3 +1,5 @@
+//$ cite -u https://github.com/evanw/webgl-water -U https://github.com/shanecelis/water-demo -mC -l mit
+
 Shader "Unlit/Caustics"
 {
   Properties

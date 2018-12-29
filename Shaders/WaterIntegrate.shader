@@ -1,3 +1,5 @@
+//$ cite -u https://github.com/evanw/webgl-water -U https://github.com/shanecelis/water-demo -mC -l mit
+
 Shader "CustomRenderTexture/WaterIntegrate"
 {
   Properties
@@ -97,10 +99,10 @@ Shader "CustomRenderTexture/WaterIntegrate"
   }
 
 
-  float4 frag_copy(v2f_init_customrendertexture IN) : COLOR
-  {
-    return tex2D(_Tex, IN.texcoord.xy);
-  }
+  // float4 frag_copy(v2f_init_customrendertexture IN) : COLOR
+  // {
+  //   return tex2D(_Tex, IN.texcoord.xy);
+  // }
 
   float4 frag_raise(v2f_customrendertexture i) : COLOR
   {
