@@ -15,6 +15,13 @@ Requirements
 
 * Unity 2018.2.17f1
 
+Usage
+-----
+
+Create a new project using Unity 2018.2.17f1. Clone this repo into the "Assets" directory.  Open the "cube-of-water" scene and hit play.
+
+You can click on the water to cause a wave.  You can drag to move the camera around.  Hit "space" key to pause water simulation.  Hit "n" key to update the simulation one time step.
+
 Implementation Notes
 --------------------
 
@@ -33,7 +40,7 @@ Bugs
 
 * WebGL build not working (major regression from original project).
 
-* Not all UI from original are preserved.
+* Not all UI elements from original are preserved.
 
 * Underside of water does not reflect like it should.  Seems like a HLSL lerp problem.
 
