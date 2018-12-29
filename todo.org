@@ -1,6 +1,12 @@
 * TODO
   - [X] Sphere shadow is not working.
   - [X] Make camera pivot-able.
-  - [ ] Add ripples
+  - [X] Add ripples
   - [ ] Made sphere draggable.
   - [ ] Add sphere physics.
+* BUGS
+** The Water.shader UNDER_WATER section does reflect properly
+   It seems to a be a bug with the lerp. See line 123 of Water.shader for more
+   details.
+** WebGL not working.
+   Looks weird. No waves.
