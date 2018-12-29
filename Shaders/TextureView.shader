@@ -1,4 +1,4 @@
-﻿//$ cite -U https://github.com/shanecelis/water-demo -C -l mit
+﻿//$ cite -u https://github.com/shanecelis/water-demo -C -l mit
 
 /**
  Shader to view the render textures like water and caustics.
