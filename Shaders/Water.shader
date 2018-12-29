@@ -1,5 +1,14 @@
 //$ cite -u https://github.com/evanw/webgl-water -U https://github.com/shanecelis/water-demo -mC -l mit
+/* Original code[1] Copyright (c) 2015 Evan Wallace[2]
+   Modified code[3] Copyright (c) 2018 Shane Celis[4]
+   Licensed under the MIT License[5]
 
+   [1]: https://github.com/evanw/webgl-water
+   [2]: https://github.com/evanw
+   [3]: https://github.com/shanecelis/water-demo
+   [4]: http://twitter.com/shanecelis
+   [5]: https://opensource.org/licenses/MIT
+*/
 Shader "Unlit/Water"
 {
   Properties

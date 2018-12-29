@@ -1,12 +1,14 @@
 Water Demo
 ==========
 
+![Water demo GIF showing caustics.](water-demo.gif)
+
 This is a port of Evan Wallace's [Water Demo](http://madebyevan.com/webgl-water/) from WebGL to Unity.
 
 Motivation
 ----------
 
-I ported this as an exercise to investigate different caustics implementations.  Having surveyed research papers on real-time caustics, I believe Evan's work supercedes many published algorithms in terms of simplicity and performance and is suitable for publication.
+I ported this as an exercise to investigate different real-time caustics implementations.  I've only surveyed a handful of research papers on real-time caustics, but it seems like [Evan's work](https://medium.com/@evanwallace/rendering-realtime-caustics-in-webgl-2a99a29a0b2c) would be suitable for publication for both its simplicity and performance.
 
 Requirements
 ------------
@@ -29,7 +31,13 @@ A lot of this is smoke and mirrors. The cube knows where the sphere is, so it re
 Bugs
 ----
 
-See the `todo.org` file.
+* WebGL build not working (major regression from original project).
+
+* Not all UI from original are preserved.
+
+* Underside of water does not reflect like it should.  Seems like a HLSL lerp problem.
+
+See the `todo.org` file for more details.
 
 License
 -------

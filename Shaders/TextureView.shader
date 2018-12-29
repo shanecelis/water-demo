@@ -1,5 +1,11 @@
-﻿//$ cite -u https://github.com/shanecelis/water-demo -C -l mit
+//$ cite -u https://github.com/shanecelis/water-demo -C -l mit
+/* Original code[1] Copyright (c) 2018 Shane Celis[2]
+   Licensed under the MIT License[3]
 
+   [1]: https://github.com/shanecelis/water-demo
+   [2]: https://github.com/shanecelis
+   [3]: https://opensource.org/licenses/MIT
+*/
 /**
  Shader to view the render textures like water and caustics.
 */
