@@ -52,3 +52,8 @@ License
 -------
 
 This project is released under the MIT license.
+
+Contact
+-------
+
+I won't be providing any support for this, but if you want to follow me and the strange things I make you can find me on twitter [@shanecelis](https://twitter.com/shanecelis).
