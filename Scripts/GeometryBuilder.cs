@@ -1,15 +1,31 @@
-﻿using System.Collections;
+﻿//$ cite -u https://github.com/shanecelis/water-demo -C -l mit
+
+// #define HAS_PROCEDURAL_TOOLKIT
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if HAS_PROCEDURAL_TOOLKIT
 using ProceduralToolkit;
+#endif
 using System.Linq;
 
+/*
+  This class was used to generate the cube, water plane, and sphere models.
+
+  It requires the
+  [ProceduralToolkit](https://github.com/Syomus/ProceduralToolkit) but shouldn't
+  be necessary unless you're regenerating the geometry.
+
+  If you do regenerate the geometry and want to save them,
+  [MeshSaver](https://github.com/pharan/Unity-MeshSaver) may come in handy.
+ */
 public class GeometryBuilder : MonoBehaviour {
 
   public MeshFilter cubeMeshFilter;
   public MeshFilter waterMeshFilter;
   public MeshFilter sphereMeshFilter;
 
+#if HAS_PROCEDURAL_TOOLKIT
   void Start () {
     GenerateMeshes();
   }
@@ -36,11 +52,7 @@ public class GeometryBuilder : MonoBehaviour {
     sphereMeshFilter.mesh = sphere.ToMesh();
   }
 
-  /// <summary>
-  /// Constructs a hexahedron draft
-  /// </summary>
-  public static MeshDraft CubeOpenTop(Vector3 width, Vector3 length, Vector3 height, bool generateUV = true)
-  {
+  public static MeshDraft CubeOpenTop(Vector3 width, Vector3 length, Vector3 height, bool generateUV = true) {
     Vector3 v000 = -width/2 - length/2 - height/2;
     Vector3 v001 = v000 + height;
     Vector3 v010 = v000 + width;
@@ -75,7 +87,6 @@ public class GeometryBuilder : MonoBehaviour {
     }
     return draft;
   }
-
-
+#endif
 
 }
