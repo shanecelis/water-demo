@@ -134,7 +134,7 @@ Shader "Unlit/Water"
         // XXX This lerp is not working. If you provide 0 as its last argument or multiply by 0, it
         // shows the reflectedColor.  If however, you multiply its last argument by 0.00000001, you
         // get a black surface.
-        fixed4 col = float4(lerp(reflectedColor, refractedColor, (1.0 - fresnel) * length(refractedRay)), 1.0);
+        fixed4 col = float4(lerp(reflectedColor, saturate(refractedColor), (1.0 - fresnel) * length(refractedRay)), 1.0);
         // fixed4 col = float4(reflectedColor, 1);
         // fixed4 col = float4(refractedColor, 1);
 #else
