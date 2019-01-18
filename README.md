@@ -31,9 +31,9 @@ This is a pretty faithful reproduction of Evan's demo.  As such there are a numb
 
 For instance, the shader that renders the sphere has variable `sphereCenter`, so the sphere rendering object is expected to located at the origin and if you change that, it probably will not look right.
 
-The light direction is provided to shaders as a vector.  It doesn't use Unity's lighting at all.
+The light direction is provided to shaders as a direction vector.  It doesn't use Unity's lighting at all.
 
-The models' vertices do not have UV coordinates.  For instance the cube's minimum and maximum model position are (-1, -1, -1) and (1, 1, 1), so any point on its surface is often just mapped directly to a UV coordinate [0, 1]^2 by transforming the point p by `p * 0.5 + 0.5`.  This works fine for the purposes of the demo, but one would probably want to switch to UV coordinates in the future.
+The shaders do not use the models' UV coordinates.  For instance the cube's minimum and maximum model position are (-1, -1, -1) and (1, 1, 1), so any point on its surface is often just mapped directly to a UV coordinate [0, 1]^2 by transforming the point p by `p * 0.5 + 0.5`.  This works fine for the purposes of the demo, but one would probably want to switch to UV coordinates in the future.
 
 A lot of this is smoke and mirrors. The cube knows where the sphere is, so it renders its shadow. Great for a tech demo, but if you want to allow for multiple spheres or other objects, this will need to be reformulated significantly.
 
@@ -52,6 +52,8 @@ License
 -------
 
 This project is released under the MIT license.
+
+The tiles texture appears to be [Patrick Hoesly's](https://www.flickr.com/photos/zooboing/3682834083) and was released under the Creative Commons Attribution (CC-BY) license.
 
 Contact
 -------
